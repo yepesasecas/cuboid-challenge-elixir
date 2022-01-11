@@ -22,4 +22,16 @@ defmodule App.Store.Bag do
     |> cast(attrs, [:volume, :title])
     |> validate_required([:volume, :title])
   end
+
+  def update_volumes(bag) do
+    payloadVolume = bag.cuboids
+      |> Enum.reduce(0, fn cuboid, acc -> 
+        acc + (cuboid.width * cuboid.depth * cuboid.height)
+      end)
+    availableVolume = bag.volume - payloadVolume
+
+    bag
+    |> Map.put(:payloadVolume, payloadVolume)
+    |> Map.put(:availableVolume, availableVolume)
+  end
 end

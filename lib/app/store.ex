@@ -64,7 +64,12 @@ defmodule App.Store do
 
   """
   def list_bags do
-    Repo.all(Bag) |> Repo.preload(:cuboids)
+    Bag
+    |> Repo.all() 
+    |> Repo.preload(:cuboids)
+    |> Enum.map(fn bag -> 
+      Bag.update_volumes(bag)
+    end)
   end
 
   @doc """
@@ -78,7 +83,12 @@ defmodule App.Store do
       %Bag{}
 
   """
-  def get_bag(id), do: Repo.get(Bag, id) |> Repo.preload(:cuboids)
+  def get_bag(id) do 
+    Bag
+    |> Repo.get(id) 
+    |> Repo.preload(:cuboids)
+    |> Bag.update_volumes()
+  end
 
   @doc """
   Creates a bag.
