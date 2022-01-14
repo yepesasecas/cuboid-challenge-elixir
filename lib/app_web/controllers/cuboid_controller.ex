@@ -13,7 +13,7 @@ defmodule AppWeb.CuboidController do
 
   def create(conn, %{"bag_id" => bag_id} = cuboid_params) do
     with :ok <- Store.validate_bag(bag_id),
-      {:ok, %Cuboid{} = cuboid} <- Store.create_cuboid(cuboid_params) do
+         {:ok, %Cuboid{} = cuboid} <- Store.create_cuboid(cuboid_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.cuboid_path(conn, :show, cuboid))

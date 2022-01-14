@@ -48,8 +48,8 @@ defmodule App.Store do
   """
   def create_cuboid(attrs \\ %{}) do
     %Cuboid{}
-      |> Cuboid.changeset(attrs)
-      |> Repo.insert()
+    |> Cuboid.changeset(attrs)
+    |> Repo.insert()
   end
 
   def update_cuboid(id, attrs \\ %{}) do
@@ -60,6 +60,7 @@ defmodule App.Store do
 
   def delete_cuboid(id) do
     cuboid = get_cuboid(id)
+
     if cuboid do
       Repo.delete(cuboid)
     else
@@ -68,7 +69,6 @@ defmodule App.Store do
   end
 
   alias App.Store.Bag
-
 
   @doc """
   Returns the list of bags.
@@ -81,9 +81,9 @@ defmodule App.Store do
   """
   def list_bags do
     Bag
-    |> Repo.all() 
+    |> Repo.all()
     |> Repo.preload(:cuboids)
-    |> Enum.map(fn bag -> 
+    |> Enum.map(fn bag ->
       Bag.update_volumes(bag)
     end)
   end
@@ -99,20 +99,24 @@ defmodule App.Store do
       %Bag{}
 
   """
-  def get_bag(id) do 
-    bag = Bag
-      |> Repo.get(id) 
+  def get_bag(id) do
+    bag =
+      Bag
+      |> Repo.get(id)
       |> Repo.preload(:cuboids)
       |> Bag.update_volumes()
   end
 
   def validate_bag(id) do
     bag = Repo.get(Bag, id)
+
     if bag do
       :ok
     else
-      changeset = Ecto.Changeset.change(%Bag{}, %{})
+      changeset =
+        Ecto.Changeset.change(%Bag{}, %{})
         |> Ecto.Changeset.add_error(:bag, "does not exist")
+
       {:error, changeset}
     end
   end

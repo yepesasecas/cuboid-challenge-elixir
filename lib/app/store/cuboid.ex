@@ -26,13 +26,15 @@ defmodule App.Store.Cuboid do
     |> validate_volume_space()
   end
 
-
   defp validate_volume_space(%{valid?: false} = changeset), do: changeset
+
   defp validate_volume_space(%{valid?: true, changes: changes} = changeset) do
     %{width: width, height: height, depth: depth, bag_id: bag_id} = changes
     bag = App.Store.get_bag(bag_id)
+
     if bag do
       cuboidVolume = height * depth * width
+
       if cuboidVolume <= bag.availableVolume do
         changeset
       else
@@ -50,13 +52,17 @@ defmodule App.Store.Cuboid do
     |> validate_update_volume_space()
   end
 
-
   defp validate_update_volume_space(%{valid?: false} = changeset), do: changeset
-  defp validate_update_volume_space(%{valid?: true, changes: changes, data: %App.Store.Cuboid{bag_id: bag_id}} = changeset) do
+
+  defp validate_update_volume_space(
+         %{valid?: true, changes: changes, data: %App.Store.Cuboid{bag_id: bag_id}} = changeset
+       ) do
     %{width: width, height: height, depth: depth} = changes
     bag = App.Store.get_bag(bag_id)
+
     if bag do
       cuboidVolume = height * depth * width
+
       if cuboidVolume <= bag.availableVolume do
         changeset
       else
