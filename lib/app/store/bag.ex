@@ -24,16 +24,16 @@ defmodule App.Store.Bag do
   end
 
   def update_volumes(bag) do
-    payloadVolume =
+    payload_volume =
       bag.cuboids
       |> Enum.reduce(0, fn cuboid, acc ->
         acc + cuboid.width * cuboid.depth * cuboid.height
       end)
 
-    availableVolume = bag.volume - payloadVolume
+    available_volume = bag.volume - payload_volume
 
     bag
-    |> Map.put(:payloadVolume, payloadVolume)
-    |> Map.put(:availableVolume, availableVolume)
+    |> Map.put(:payloadVolume, payload_volume)
+    |> Map.put(:availableVolume, available_volume)
   end
 end

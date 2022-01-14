@@ -33,9 +33,9 @@ defmodule App.Store.Cuboid do
     bag = App.Store.get_bag(bag_id)
 
     if bag do
-      cuboidVolume = height * depth * width
+      cuboid_volume = height * depth * width
 
-      if cuboidVolume <= bag.availableVolume do
+      if cuboid_volume <= bag.availableVolume do
         changeset
       else
         add_error(changeset, :volume, "Insufficient space in bag")
@@ -61,9 +61,9 @@ defmodule App.Store.Cuboid do
     bag = App.Store.get_bag(bag_id)
 
     if bag do
-      cuboidVolume = height * depth * width
+      cuboid_volume = height * depth * width
 
-      if cuboidVolume <= bag.availableVolume do
+      if cuboid_volume <= bag.availableVolume do
         changeset
       else
         add_error(changeset, :volume, "Insufficient space in bag")
