@@ -106,7 +106,8 @@ defmodule App.StoreTest do
           bag_id: bag.id
         })
 
-      bag |> Repo.preload(:cuboids)
+      Store.get_bag(bag.id)
+      |> Repo.preload(:cuboids)
     end
 
     test "list_bags/0 returns all bags" do
